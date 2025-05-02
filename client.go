@@ -16,13 +16,13 @@ func NewClient(token string) *Client {
 	return &Client{
 		AuthToken: token,
 		BaseUrl:   "https://api.deepseek.com",
+		httpClient: &http.Client{
+			Timeout: 2000 * time.Second,
+		},
 	}
 }
 
 func (c *Client) Do(req *http.Request) (*http.Response, error) {
-	c.httpClient = &http.Client{
-		Timeout: 120 * time.Second,
-	}
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, err

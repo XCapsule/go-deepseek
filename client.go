@@ -23,6 +23,9 @@ func NewClient(token string) *Client {
 }
 
 func (c *Client) Do(req *http.Request) (*http.Response, error) {
+	c.httpClient = &http.Client{
+		Timeout: 2000 * time.Second,
+	}
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, err
